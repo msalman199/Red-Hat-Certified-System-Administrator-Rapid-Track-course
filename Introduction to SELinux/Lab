@@ -1,0 +1,84 @@
+Task 1: Install and Configure SELinux
+Subtask 1.1: Verify SELinux Installation
+Most modern Linux distributions come with SELinux pre-installed. Verify its presence:
+
+# Check if SELinux is installed
+rpm -qa | grep selinux
+Expected Output:
+Packages like libselinux, selinux-policy, etc., should appear.
+
+Troubleshooting:
+If SELinux is not installed, install it using:
+
+sudo dnf install selinux-policy selinux-policy-targeted libselinux-utils
+Subtask 1.2: Check SELinux Status
+Check the current status of SELinux:
+
+sestatus
+Expected Output:
+
+SELinux status: enabled
+Current mode: enforcing, permissive, or disabled
+Policy version: (e.g., targeted)
+Task 2: Understand SELinux Modes
+Subtask 2.1: Switch Between SELinux Modes
+SELinux operates in three modes:
+
+Enforcing: Policies are enforced (default).
+Permissive: Policies are logged but not enforced (for troubleshooting).
+Disabled: SELinux is turned off.
+Check Current Mode
+getenforce
+Temporarily Change Mode
+To switch to Permissive mode:
+
+sudo setenforce 0
+To switch back to Enforcing mode:
+
+sudo setenforce 1
+Note: These changes are temporary and revert after reboot.
+
+Permanently Change Mode
+Edit /etc/selinux/config:
+
+sudo vi /etc/selinux/config
+Change SELINUX= to one of:
+
+enforcing
+permissive
+disabled
+Reboot to apply changes:
+
+sudo reboot
+Expected Outcome:
+After reboot, sestatus or getenforce reflects the new mode.
+
+Task 3: Check and Modify SELinux Contexts
+Subtask 3.1: View File Contexts
+SELinux assigns security contexts to files, processes, and ports. Check a file's context:
+
+ls -Z /etc/passwd
+Expected Output:
+Example: system_u:object_r:passwd_file_t:s0
+
+Subtask 3.2: Change File Context
+Use chcon to modify a file's context temporarily:
+
+# Create a test file
+sudo touch /var/www/html/testfile.html
+
+# Check current context
+ls -Z /var/www/html/testfile.html
+
+# Change context to httpd_sys_content_t (default for web files)
+sudo chcon -t httpd_sys_content_t /var/www/html/testfile.html
+
+# Verify
+ls -Z /var/www/html/testfile.html
+Expected Outcome:
+The context changes to httpd_sys_content_t.
+
+Subtask 3.3: Restore Default Contexts
+To reset contexts to default values (useful after misconfigurations):
+
+sudo restorecon -v /var/www/html/testfile.html
