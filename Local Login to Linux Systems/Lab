@@ -1,0 +1,52 @@
+Task 1: Access the Linux System Physically
+Subtask 1.1: Power On the System
+Ensure the Linux system is powered on.
+If using a virtual machine (e.g., VirtualBox, KVM), start the VM.
+Subtask 1.2: Reach the Login Prompt
+After booting, the system will display a login prompt (text-based or graphical).
+If using a graphical login screen, press Ctrl + Alt + F2 to switch to a text-based terminal (tty2).
+Expected Outcome:
+
+You should see a login prompt similar to:
+Fedora 38 (Workstation Edition)  
+Kernel 6.2.15-200.fc38.x86_64 on an x86_64 (tty2)  
+
+localhost login: _  
+Troubleshooting Tip:
+
+If the system boots to a graphical interface but you need a terminal, use Ctrl + Alt + F2-F6 to switch to a virtual console.
+Task 2: Log In Using Username and Password
+Subtask 2.1: Enter Username
+At the login: prompt, type your username (e.g., user1) and press Enter.
+localhost login: user1  
+Subtask 2.2: Enter Password
+When prompted for a password, type it (no characters will be displayed for security) and press Enter.
+Password:  
+Expected Outcome:
+
+Successful login displays a shell prompt:
+[user1@localhost ~]$  
+Troubleshooting Tip:
+
+If login fails, verify the username and password.
+If locked out, a system administrator may need to reset the password.
+Task 3: Explore Virtual Terminals
+Subtask 3.1: Switch Between Virtual Terminals
+Linux provides multiple virtual terminals (tty1-tty6 by default).
+Press Ctrl + Alt + F3 to switch to tty3.
+Log in again if required.
+Return to the previous terminal using Ctrl + Alt + F2.
+Subtask 3.2: Check Active Terminal
+Run the following command to identify the current terminal:
+tty  
+Expected Output:
+/dev/tty2  
+Subtask 3.3: List Logged-in Users
+To see active sessions, run:
+who  
+Expected Output:
+user1   tty2         2023-10-10 14:30  
+user1   tty3         2023-10-10 14:35  
+Troubleshooting Tip:
+
+If switching terminals doesn’t work, ensure the system supports virtual terminals (most Linux distros do by default).
